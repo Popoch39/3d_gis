@@ -48,6 +48,7 @@ body {
   width: 100dvw;
 }
 
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -123,5 +124,11 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  [data-sonner-toaster] {
+    @apply z-[9999];
   }
 }

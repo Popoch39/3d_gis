@@ -1,4 +1,4 @@
-import { Map, Marker } from "mapbox-gl";
+import { Layer, Map, Marker } from "mapbox-gl";
 import { create } from "zustand";
 
 interface MapState {
@@ -8,6 +8,8 @@ interface MapState {
   resetMapInstance: () => void;
   flyTo: (center: [number, number], zoom?: number, pitch?: number, bearing?: number) => void;
   addMarker: (lngLat: [number, number], options?: mapboxgl.MarkerOptions) => mapboxgl.Marker | null;
+  addLayer: (layer: Layer) => void;
+  removeLayer: (id: string) => void;
 }
 
 export const useMapStore = create<MapState>((set, get) => ({
@@ -44,5 +46,20 @@ export const useMapStore = create<MapState>((set, get) => ({
       .addTo(mapInstance);
 
     return marker;
-  }
+  },
+
+  addLayer: (layer: Layer) => {
+    const { mapInstance } = get();
+    if (mapInstance) {
+      mapInstance.addLayer(layer);
+    }
+  },
+
+  removeLayer: (id: string) => {
+    const { mapInstance } = get();
+    if (mapInstance) {
+      mapInstance.removeLayer(id);
+    }
+  },
+
 }));
